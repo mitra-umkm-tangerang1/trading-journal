@@ -3,33 +3,60 @@ let chart;
 
 function addTrade() {
   const type = document.getElementById("type").value;
-  const pair = document.getElementById("pair").value;
+  const pair = document.getElementById("pair").value.toUpperCase();
   const lot = parseFloat(document.getElementById("lot").value);
   const entry = parseFloat(document.getElementById("entry").value);
   const tp = parseFloat(document.getElementById("tp").value);
   const sl = parseFloat(document.getElementById("sl").value);
 
-  if (!pair || isNaN(lot) || isNaN(entry) || isNaN(tp) || isNaN(sl)) {
-    alert("Isi semua data!");
+  if (!pair || isNaN(lot) || isNaN(entry) || isNaN(tp)) {
+    alert("Isi data dengan benar!");
     return;
   }
 
-  // hitung pips berdasarkan BUY / SELL
+  let profit = 0;
   let pips = 0;
-  if (type === "BUY") {
-    pips = (tp - entry) * 100;
-  } else {
-    pips = (entry - tp) * 100;
+
+  // =========================
+  // KHUSUS XAUUSD (AKURAT)
+  // =========================
+  if (pair === "XAUUSD") {
+    if (type === "BUY") {
+      profit = (tp - entry) * lot * 100;
+      pips = (tp - entry) * 100;
+    } else {
+      profit = (entry - tp) * lot * 100;
+      pips = (entry - tp) * 100;
+    }
   }
 
-  const profit = pips * lot;
+  // =========================
+  // FOREX USD (EURUSD dll)
+  // =========================
+  else if (pair.includes("USD")) {
+    if (type === "BUY") {
+      pips = (tp - entry) * 10000;
+    } else {
+      pips = (entry - tp) * 10000;
+    }
 
-  const now = new Date();
-  const date = now.toLocaleDateString("id-ID");
+    profit = pips * lot * 10;
+  }
+
+  // =========================
+  // BLOK PAIR LAIN
+  // =========================
+  else {
+    alert("Pair tidak didukung! Gunakan XAUUSD atau pair USD saja.");
+    return;
+  }
+
+  const date = new Date().toLocaleString("id-ID");
 
   trades.unshift({ date, type, pair, lot, pips, profit });
 
   localStorage.setItem("trades", JSON.stringify(trades));
+
   render();
 }
 
