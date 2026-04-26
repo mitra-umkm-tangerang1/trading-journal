@@ -5,30 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trading Journal</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <h1>📊 Journal</h1>
+  <h1>📊 Trading Journal</h1>
 
-    <div class="card form">
-      <input type="text" id="pair" placeholder="Pair">
-      <input type="number" id="lot" placeholder="Lot">
-      <input type="number" id="entry" placeholder="Entry">
-      <input type="number" id="exit" placeholder="Exit">
-      <button onclick="addTrade()">+ Tambah</button>
-    </div>
-
-    <div class="card total">
-      Total Profit
-      <h2 id="total">0</h2>
-    </div>
-
-    <div id="history" class="history"></div>
-
+  <div class="card form">
+    <input id="pair" placeholder="Pair">
+    <input id="lot" type="number" placeholder="Lot">
+    <input id="entry" type="number" placeholder="Entry">
+    <input id="exit" type="number" placeholder="Exit">
+    <button onclick="addTrade()">Tambah</button>
   </div>
 
-  <script src="script.js"></script>
+  <div class="card total">
+    Total Profit
+    <h2 id="total">0</h2>
+  </div>
+
+  <div class="card filter">
+    <button onclick="setFilter('all')">All</button>
+    <button onclick="setFilter('day')">Hari</button>
+    <button onclick="setFilter('month')">Bulan</button>
+  </div>
+
+  <canvas id="chart"></canvas>
+
+  <div id="history"></div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
