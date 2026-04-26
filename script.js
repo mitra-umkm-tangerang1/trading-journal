@@ -13,14 +13,11 @@ function addTrade() {
 
   const pips = (exit - entry) * 100;
   const profit = pips * lot;
-
   const date = new Date().toLocaleString();
 
-  const trade = { date, pair, lot, pips, profit };
+  trades.unshift({ date, pair, lot, pips, profit });
 
-  trades.push(trade);
   localStorage.setItem("trades", JSON.stringify(trades));
-
   render();
 }
 
@@ -35,15 +32,18 @@ function render() {
     total += t.profit;
 
     history.innerHTML += `
-      <tr>
-        <td>${t.date}</td>
-        <td>${t.pair}</td>
-        <td>${t.lot}</td>
-        <td>${t.pips.toFixed(1)}</td>
-        <td style="color:${t.profit >= 0 ? 'lime' : 'red'}">
-          ${t.profit.toFixed(2)}
-        </td>
-      </tr>
+      <div class="trade">
+        <div class="trade-top">
+          <span>${t.pair}</span>
+          <span>${t.date}</span>
+        </div>
+        <div class="trade-bottom">
+          <span>${t.pips.toFixed(1)} pips</span>
+          <span style="color:${t.profit >= 0 ? 'lime' : 'red'}">
+            ${t.profit.toFixed(2)}
+          </span>
+        </div>
+      </div>
     `;
   });
 
