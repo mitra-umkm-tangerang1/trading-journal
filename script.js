@@ -2,26 +2,42 @@ let trades = JSON.parse(localStorage.getItem("trades")) || [];
 let filter = "all";
 let chart;
 
+// ambil input dengan benar
+const pairInput = document.getElementById("pair");
+const lotInput = document.getElementById("lot");
+const entryInput = document.getElementById("entry");
+const exitInput = document.getElementById("exit");
+
 function addTrade() {
   const pair = pairInput.value;
   const lot = parseFloat(lotInput.value);
   const entry = parseFloat(entryInput.value);
   const exit = parseFloat(exitInput.value);
 
-  if (!pair || !lot || !entry || !exit) return alert("Isi semua");
+  if (!pair || isNaN(lot) || isNaN(entry) || isNaN(exit)) {
+    alert("Isi semua data dengan benar!");
+    return;
+  }
 
   const pips = (exit - entry) * 100;
   const profit = pips * lot;
-  const date = new Date();
+  const date = new Date().toISOString();
 
   trades.unshift({ pair, lot, pips, profit, date });
+
   localStorage.setItem("trades", JSON.stringify(trades));
+
+  // reset input biar enak UX
+  pairInput.value = "";
+  lotInput.value = "";
+  entryInput.value = "";
+  exitInput.value = "";
 
   render();
 }
 
 function deleteTrade(i) {
-  trades.splice(i,1);
+  trades.splice(i, 1);
   localStorage.setItem("trades", JSON.stringify(trades));
   render();
 }
@@ -33,12 +49,19 @@ function setFilter(f) {
 
 function getFiltered() {
   const now = new Date();
+
   return trades.filter(t => {
     const d = new Date(t.date);
-    if (filter === "day")
+
+    if (filter === "day") {
       return d.toDateString() === now.toDateString();
-    if (filter === "month")
-      return d.getMonth() === now.getMonth();
+    }
+
+    if (filter === "month") {
+      return d.getMonth() === now.getMonth() &&
+             d.getFullYear() === now.getFullYear();
+    }
+
     return true;
   });
 }
@@ -51,14 +74,14 @@ function render() {
   history.innerHTML = "";
   let total = 0;
 
-  data.forEach((t,i) => {
+  data.forEach((t, i) => {
     total += t.profit;
 
     history.innerHTML += `
-      <div class="trade" ontouchstart="this.style.transform='translateX(-60px)'">
+      <div class="trade">
         <button class="delete-btn" onclick="deleteTrade(${i})">Hapus</button>
         <div>${t.pair} | ${t.pips.toFixed(1)} pips</div>
-        <div style="color:${t.profit>=0?'green':'red'}">
+        <div style="color:${t.profit >= 0 ? 'green' : 'red'}">
           ${t.profit.toFixed(2)}
         </div>
       </div>
@@ -72,6 +95,8 @@ function render() {
 function renderChart(data) {
   const ctx = document.getElementById("chart");
 
+  if (!ctx) return;
+
   const profits = data.map(t => t.profit);
 
   if (chart) chart.destroy();
@@ -79,12 +104,15 @@ function renderChart(data) {
   chart = new Chart(ctx, {
     type: "line",
     data: {
-      labels: profits.map((_,i)=>i+1),
+      labels: profits.map((_, i) => i + 1),
       datasets: [{
         label: "Profit",
         data: profits,
-        borderColor: "black"
+        borderWidth: 2
       }]
+    },
+    options: {
+      responsive: true
     }
   });
 }
