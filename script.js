@@ -18,15 +18,15 @@ function addTrade() {
   let pips = 0;
 
   // =========================
-  // KHUSUS XAUUSD (AKURAT)
+  // KHUSUS XAUUSD (FIX AKURAT)
   // =========================
   if (pair === "XAUUSD") {
     if (type === "BUY") {
+      pips = (tp - entry) * 10;              // ✅ FIX
       profit = (tp - entry) * lot * 100;
-      pips = (tp - entry) * 100;
     } else {
+      pips = (entry - tp) * 10;              // ✅ FIX
       profit = (entry - tp) * lot * 100;
-      pips = (entry - tp) * 100;
     }
   }
 
