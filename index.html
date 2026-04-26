@@ -1,1 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Trading Journal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+  <h1>📊 Trading Journal</h1>
+
+  <div class="form">
+    <input type="text" id="pair" placeholder="Pair (XAUUSD)">
+    <input type="number" id="lot" placeholder="Lot">
+    <input type="number" id="entry" placeholder="Entry">
+    <input type="number" id="exit" placeholder="Exit">
+    <button onclick="addTrade()">Tambah</button>
+  </div>
+
+  <h2>Total Profit: <span id="total">0</span></h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Tanggal</th>
+        <th>Pair</th>
+        <th>Lot</th>
+        <th>Pips</th>
+        <th>Profit</th>
+      </tr>
+    </thead>
+    <tbody id="history"></tbody>
+  </table>
+
+  <script src="script.js"></script>
+</body>
+</html>
