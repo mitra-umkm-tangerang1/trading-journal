@@ -13,28 +13,57 @@
 
   <h1>📊 Trading Journal</h1>
 
+  <!-- FORM INPUT -->
   <div class="card form">
-    <input id="pair" placeholder="Pair">
+    <select id="type">
+      <option value="BUY">BUY</option>
+      <option value="SELL">SELL</option>
+    </select>
+
+    <input id="pair" placeholder="Pair (XAUUSD)">
     <input id="lot" type="number" placeholder="Lot">
     <input id="entry" type="number" placeholder="Entry">
-    <input id="exit" type="number" placeholder="Exit">
+    <input id="tp" type="number" placeholder="TP">
+    <input id="sl" type="number" placeholder="SL">
+
     <button onclick="addTrade()">Tambah</button>
   </div>
 
+  <!-- TOTAL PROFIT -->
   <div class="card total">
     Total Profit
     <h2 id="total">0</h2>
   </div>
 
+  <!-- FILTER -->
   <div class="card filter">
     <button onclick="setFilter('all')">All</button>
     <button onclick="setFilter('day')">Hari</button>
     <button onclick="setFilter('month')">Bulan</button>
   </div>
 
-  <canvas id="chart"></canvas>
+  <!-- GRAFIK -->
+  <div class="card">
+    <canvas id="chart"></canvas>
+  </div>
 
-  <div id="history"></div>
+  <!-- HISTORY TABLE -->
+  <div class="card">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Type</th>
+          <th>Pair</th>
+          <th>Lot</th>
+          <th>Pips</th>
+          <th>Profit</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="history"></tbody>
+    </table>
+  </div>
 
 </div>
 
