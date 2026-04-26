@@ -2,35 +2,32 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trading Journal</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>📊 Trading Journal</h1>
+  <div class="container">
 
-  <div class="form">
-    <input type="text" id="pair" placeholder="Pair (XAUUSD)">
-    <input type="number" id="lot" placeholder="Lot">
-    <input type="number" id="entry" placeholder="Entry">
-    <input type="number" id="exit" placeholder="Exit">
-    <button onclick="addTrade()">Tambah</button>
+    <h1>📊 Journal</h1>
+
+    <div class="card form">
+      <input type="text" id="pair" placeholder="Pair">
+      <input type="number" id="lot" placeholder="Lot">
+      <input type="number" id="entry" placeholder="Entry">
+      <input type="number" id="exit" placeholder="Exit">
+      <button onclick="addTrade()">+ Tambah</button>
+    </div>
+
+    <div class="card total">
+      Total Profit
+      <h2 id="total">0</h2>
+    </div>
+
+    <div id="history" class="history"></div>
+
   </div>
-
-  <h2>Total Profit: <span id="total">0</span></h2>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Tanggal</th>
-        <th>Pair</th>
-        <th>Lot</th>
-        <th>Pips</th>
-        <th>Profit</th>
-      </tr>
-    </thead>
-    <tbody id="history"></tbody>
-  </table>
 
   <script src="script.js"></script>
 </body>
